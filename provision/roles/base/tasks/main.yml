@@ -1,0 +1,22 @@
+---
+- name: Stop and Disabled iptables
+  service: name=iptables state=stopped enabled=no
+
+- name: Install ntp
+  yum: name=ntp state=present
+
+- name: Start and Enable ntpd
+  service: name=ntpd state=started enabled=yes
+
+- name: Install base packages
+  yum: name={{ item }}
+  with_items:
+    - git
+    - vim
+
+- name: Remove default localtime
+  file: path=/etc/localtime state=absent
+
+- name: Make localtime symlink to JST
+  file: src=/usr/share/zoneinfo/Asia/Tokyo dest=/etc/localtime state=link mode=0644
+

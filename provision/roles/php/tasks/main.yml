@@ -1,0 +1,44 @@
+---
+- name: Install epel yum repository
+  yum: name="http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm"
+
+- name: Install remi yum repository
+  yum: name="http://rpms.famillecollet.com/enterprise/remi-release-6.rpm"
+
+- name: Install PHP 5.6
+  yum: name={{ item }} state=present enablerepo=remi-php56
+  with_items:
+    - php
+    - php-cli
+    - php-process
+    - php-pdo
+    - php-mbstring
+    - php-mcrypt
+    - php-devel
+    - php-common
+    - php-mysql
+    - php-pear
+    - php-pecl-xdebug
+    - php-opcache
+    - php-pecl-jsonc
+    - php-xml
+    - httpd
+
+- name: Copy httpd.conf
+  copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+  notify:
+    Restart httpd
+
+- name: Copy custom php.ini
+  copy: src=zzmyphp.ini dest=/etc/php.d/zzmyphp.ini
+  notify:
+    Restart httpd
+
+- name: Start and Enable httpd
+  service: name=httpd state=started enabled=yes
+
+- name: Install composer.phar
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin creates=/usr/bin/composer
+
+- name: Rename composer.phar to composer
+  command: mv /usr/bin/composer.phar /usr/bin/composer creates=/usr/bin/composer

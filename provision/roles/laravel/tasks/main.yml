@@ -1,0 +1,10 @@
+---
+- name: Execute compoesr install
+  shell: /usr/bin/composer install chdir=/share
+
+- name: Execute php artisan migrate
+  shell: php artisan migrate chdir=/share
+
+- name: Execute php artisan db:seed
+  shell: php artisan db:seed chdir=/share
+

@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+before_script:
+  - mysql -uroot -e "CREATE DATABASE app_test;"
+  - mysql -uroot -e "GRANT ALL PRIVILEGES ON app_test.* TO vagrant@localhost IDENTIFIED BY 'pass';"
+  - composer self-update
+
+script:
+  - cd src
+  - composer install --prefer-source --no-interaction --dev
+  - ./vendor/bin/phpunit

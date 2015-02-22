@@ -1,0 +1,25 @@
+---
+- name: Uninstall default mysql
+  yum: name=mysql-libs state=absent
+
+- name: Add MySQL yum repository
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+
+- name: Install MySQL
+  yum: name={{ item }} state=present
+  with_items:
+    - MySQL-python
+    - mysql-community-client
+    - mysql-community-server
+
+- name: Start and Enable mysql
+  service: name=mysqld state=started enabled=yes
+
+- name: Create mysql user
+  mysql_user: name=vagrant password=pass priv=*.*:ALL state=present
+
+- name: Create mysql database
+  mysql_db: name={{ item }} state=present encoding=utf8
+  with_items:
+    - app
+    - app_test
