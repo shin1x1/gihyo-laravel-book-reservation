@@ -2,7 +2,6 @@
 namespace Gihyo\BookReservation\Controller;
 
 use Gihyo\BookReservation\Filter\ApiAuthFilter;
-use Gihyo\BookReservation\Model\Reservation;
 use Gihyo\BookReservation\Model\User;
 use Gihyo\BookReservation\Service\ReservationService;
 use Gihyo\BookReservation\Validation\ReservationValidorBuilder;
@@ -65,7 +64,7 @@ class ReservationController extends AppController
             return $this->responseValidationError($validator->messages());
         }
 
-        $reservation = Reservation::where('reservation_code', $reservationCode)->first();
+        $reservation = $this->service->read($reservationCode);
         if (empty($reservation)) {
             return $this->responseNotFound();
         }
@@ -80,7 +79,7 @@ class ReservationController extends AppController
      */
     public function delete($reservationCode)
     {
-        $reservation = Reservation::where('reservation_code', $reservationCode)->first();
+        $reservation = $this->service->read($reservationCode);
         if (empty($reservation)) {
             return $this->responseNotFound();
         }

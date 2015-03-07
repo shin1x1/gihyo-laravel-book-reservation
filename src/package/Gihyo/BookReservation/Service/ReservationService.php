@@ -28,6 +28,15 @@ class ReservationService
     }
 
     /**
+     * @param string $reservationCode
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    public function read($reservationCode)
+    {
+        return Reservation::where('reservation_code', $reservationCode)->first();
+    }
+
+    /**
      * @param User $user
      * @param array $inputs
      * @return Reservation

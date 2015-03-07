@@ -69,6 +69,48 @@ class ApiReservationTest extends TestCase
         $this->assertSame(1, $reservation->book_id);
         $this->assertSame(2, $reservation->quantity);
     }
+
+    /**
+     * @test
+     */
+    public function update()
+    {
+        $headers = [
+            'HTTP_' . ApiAuthFilter::APPLICATION_TOKEN => 'token1',
+        ];
+        $parameters = [
+            'asin' => 'asin1',
+            'quantity' => 3,
+        ];
+        $this->client->request('PUT', '/api/reservation/code1', $parameters, [], $headers);
+
+        $this->assertResponseOk();
+
+        $book = Book::where('asin', 'asin1')->first();
+        $this->assertSame(8, $book->inventory);
+
+        $reservation = Reservation::where('reservation_code', 'code1')->first();
+        $this->assertSame(3, $reservation->quantity);
+    }
+
+    /**
+     * @test
+     */
+    public function delete()
+    {
+        $headers = [
+            'HTTP_' . ApiAuthFilter::APPLICATION_TOKEN => 'token1',
+        ];
+        $this->client->request('DELETE', '/api/reservation/code1', [], [], $headers);
+
+        $this->assertResponseOk();
+
+        $book = Book::where('asin', 'asin1')->first();
+        $this->assertSame(11, $book->inventory);
+
+        $this->assertSame(2, Reservation::count());
+        $this->assertFalse(Reservation::where('reservation_code', 'code1')->exists());
+    }
 }
 
 /**
