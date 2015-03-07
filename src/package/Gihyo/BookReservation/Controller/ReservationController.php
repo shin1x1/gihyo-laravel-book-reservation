@@ -34,7 +34,7 @@ class ReservationController extends AppController
      */
     public function index()
     {
-        $reservations = $this->service->readAll($this->getUser());
+        $reservations = $this->service->readAllByUser($this->getUser());
 
         return $this->responseOk($reservations);
     }

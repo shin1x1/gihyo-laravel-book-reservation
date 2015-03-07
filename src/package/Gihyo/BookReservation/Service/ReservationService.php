@@ -18,7 +18,7 @@ class ReservationService
      * @param User $user
      * @return Collection|Reservation[]
      */
-    public function readAll(User $user)
+    public function readAllByUser(User $user)
     {
         return Reservation::with(['user', 'book'])
             ->where('user_id', $user->id)

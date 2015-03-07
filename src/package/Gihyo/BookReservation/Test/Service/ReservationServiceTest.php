@@ -39,7 +39,7 @@ class ReservationServiceTest extends TestCase
     public function readReservations()
     {
         $user = User::find(2);
-        $actual = $this->sut->readAll($user);
+        $actual = $this->sut->readAllByUser($user);
 
         $this->assertSame(2, $actual->count());
 
@@ -53,7 +53,7 @@ class ReservationServiceTest extends TestCase
     public function readReservations_no_reservation()
     {
         $user = User::find(1);
-        $actual = $this->sut->readAll($user);
+        $actual = $this->sut->readAllByUser($user);
 
         $this->assertSame(0, $actual->count());
     }
