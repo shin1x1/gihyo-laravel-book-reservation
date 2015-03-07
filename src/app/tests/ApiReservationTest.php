@@ -34,7 +34,7 @@ class ApiReservationTest extends TestCase
         ];
         $this->client->request('GET', '/api/reservations', [], [], $headers);
 
-        $this->assertTrue($this->client->getResponse()->isOk());
+        $this->assertResponseOk();
 
         $json = json_decode($this->client->getResponse()->getContent());
         $this->assertSame(2, count($json));
@@ -60,7 +60,7 @@ class ApiReservationTest extends TestCase
         ];
         $this->client->request('POST', '/api/reservation', $parameters, [], $headers);
 
-        $this->assertSame(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseStatus(Response::HTTP_CREATED);
 
         $json = json_decode($this->client->getResponse()->getContent());
         $reservation = Reservation::where('reservation_code', $json->reservation_code)->first();

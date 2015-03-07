@@ -12,7 +12,7 @@ class ApiPingTest extends TestCase
     {
         $this->client->request('GET', '/api/ping');
 
-        $this->assertTrue($this->client->getResponse()->isOk());
+        $this->assertResponseOk();
 
         $decoded = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertSame('pong', $decoded);
