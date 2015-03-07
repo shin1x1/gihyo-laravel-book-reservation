@@ -87,13 +87,13 @@ class ReservationService
             throw new PreconditionException('book_not_found');
         }
         if ($book->inventory < $inputs['quantity']) {
-            throw new PreconditionException('inventory_lacked');
+            throw new PreconditionException('not_enough_book_inventory');
         }
 
         DB::transaction(function () use ($user, $book, &$reservation, $inputs) {
             $affectedRows = $book->decrementInventory($inputs['quantity']);
             if ($affectedRows !== 1) {
-                throw new PreconditionException('inventory_lacked');
+                throw new PreconditionException('not_enough_book_inventory');
             }
 
             $reservation->user_id = $user->id;

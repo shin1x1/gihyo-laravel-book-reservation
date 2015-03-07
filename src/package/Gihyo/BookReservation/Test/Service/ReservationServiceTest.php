@@ -103,7 +103,7 @@ class ReservationServiceTest extends TestCase
     /**
      * @test
      */
-    public function book_inventory_lacked()
+    public function book_not_enough_book_inventory()
     {
         $user = User::find(1);
         $inputs = [
@@ -115,7 +115,7 @@ class ReservationServiceTest extends TestCase
             $this->sut->book($user, $inputs);
             $this->fail();
         } catch (PreconditionException $e) {
-            $this->assertSame('inventory_lacked', $e->getMessage());
+            $this->assertSame('not_enough_book_inventory', $e->getMessage());
         }
     }
 
