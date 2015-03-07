@@ -5,6 +5,10 @@ php:
   - 5.5
   - 5.6
 
+addons:
+  code_climate:
+    repo_token: 537f864489b21ff5668702b50d9af7211ca12f2cb6e1f81ed9a8befd1dae2049
+
 before_script:
   - mysql -uroot -e "CREATE DATABASE app_test;"
   - mysql -uroot -e "GRANT ALL PRIVILEGES ON app_test.* TO vagrant@localhost IDENTIFIED BY 'pass';"
@@ -13,4 +17,7 @@ before_script:
 script:
   - cd src
   - composer install --prefer-source --no-interaction --dev
-  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - vendor/bin/test-reporter
