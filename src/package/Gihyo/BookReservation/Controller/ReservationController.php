@@ -1,6 +1,7 @@
 <?php
 namespace Gihyo\BookReservation\Controller;
 
+use Controller;
 use Gihyo\BookReservation\Filter\ApiAuthFilter;
 use Gihyo\BookReservation\Model\User;
 use Gihyo\BookReservation\Service\ReservationService;
@@ -11,7 +12,7 @@ use Input;
  * Class ReservationController
  * @package Gihyo\BookReservation\Controller
  */
-class ReservationController extends AppController
+class ReservationController extends Controller
 {
     use ApiControllerTrait;
 

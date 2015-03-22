@@ -95,6 +95,22 @@ class ApiReservationTest extends TestCase
 
     /**
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function update_invalid_reservation_code()
+    {
+        $headers = [
+            'HTTP_' . ApiAuthFilter::APPLICATION_TOKEN => 'token1',
+        ];
+        $parameters = [
+            'asin' => 'asin1',
+            'quantity' => 3,
+        ];
+        $this->client->request('PUT', '/api/reservation/予約コード', $parameters, [], $headers);
+    }
+
+    /**
+     * @test
      */
     public function delete()
     {

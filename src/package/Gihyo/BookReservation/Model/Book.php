@@ -10,7 +10,7 @@ use DB;
 class Book extends AppModel
 {
     /**
-     * @param $quantity
+     * @param int $quantity
      * @return int
      */
     public function decrementInventory($quantity)
@@ -26,7 +26,7 @@ class Book extends AppModel
     }
 
     /**
-     * @param $quantity
+     * @param int $quantity
      * @return int
      */
     public function incrementInventory($quantity)
