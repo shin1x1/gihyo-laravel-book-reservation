@@ -26,9 +26,10 @@ class UsersSeeder extends Seeder
             ],
         ];
 
+        $now = Carbon::now();
         foreach ($users as $v) {
-            $v['created_at'] = Carbon::now();
-            $v['updated_at'] = Carbon::now();
+            $v['created_at'] = $now;
+            $v['updated_at'] = $now;
 
             DB::table('users')->insert($v);
         }

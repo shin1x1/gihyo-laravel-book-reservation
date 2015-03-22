@@ -34,9 +34,10 @@ class BooksSeeder extends Seeder
             ],
         ];
 
+        $now = Carbon::now();
         foreach ($books as $v) {
-            $v['created_at'] = Carbon::now();
-            $v['updated_at'] = Carbon::now();
+            $v['created_at'] = $now;
+            $v['updated_at'] = $now;
 
             DB::table('books')->insert($v);
         }
