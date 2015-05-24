@@ -18,6 +18,3 @@ script:
   - cd src
   - composer install --prefer-source --no-interaction --dev
   - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-
-after_script:
-  - vendor/bin/test-reporter
